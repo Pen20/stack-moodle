@@ -26,9 +26,23 @@ try {
         console.log('4. Copy your Project URL and anon/public key');
         console.log('5. Replace the values in config.js');
     } else {
-        supabase = window.supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey);
-        console.log('✅ Supabase client initialized successfully');
+        // Wait for window.supabase to be available
+        if (typeof window !== 'undefined' && window.supabase) {
+            supabase = window.supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey);
+            console.log('✅ Supabase client initialized successfully');
+        } else {
+            console.warn('⚠️ Supabase library not loaded yet, will retry...');
+            // Retry after a short delay
+            setTimeout(() => {
+                if (window.supabase) {
+                    supabase = window.supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey);
+                    console.log('✅ Supabase client initialized successfully (retry)');
+                } else {
+                    console.error('❌ Supabase library failed to load');
+                }
+            }, 1000);
+        }
     }
 } catch (error) {
     console.error('❌ Error initializing Supabase:', error);
-} 
+}

@@ -19,7 +19,7 @@ function generateAnonymousId() {
 
 // Initialize database session when page loads
 async function initializeDatabaseSession() {
-    if (!supabase) {
+    if (!window.supabase) {
         console.warn('Supabase not configured - database tracking disabled');
         return null;
     }
@@ -28,7 +28,7 @@ async function initializeDatabaseSession() {
         const anonymousId = generateAnonymousId();
         
         // Create learning session
-        const { data, error } = await supabase
+        const { data, error } = await window.supabase
             .from('learning_sessions')
             .insert([
                 {
@@ -57,7 +57,7 @@ async function initializeDatabaseSession() {
 
 // Create question attempt record
 async function createQuestionAttempt(qfile, qname, qprefix, seed) {
-    if (!supabase || !currentSession) {
+    if (!window.supabase || !currentSession) {
         console.warn('Database not available for question attempt tracking');
         return null;
     }
@@ -67,7 +67,7 @@ async function createQuestionAttempt(qfile, qname, qprefix, seed) {
         const existingAttempt = currentAttempts[qprefix];
         const attemptNumber = existingAttempt ? existingAttempt.attempt_number + 1 : 1;
 
-        const { data, error } = await supabase
+        const { data, error } = await window.supabase
             .from('question_attempts')
             .insert([
                 {
@@ -100,7 +100,7 @@ async function createQuestionAttempt(qfile, qname, qprefix, seed) {
 
 // Update question attempt with submission results
 async function updateQuestionAttempt(qprefix, score, maxScore, isCorrect) {
-    if (!supabase || !currentAttempts[qprefix]) {
+    if (!window.supabase || !currentAttempts[qprefix]) {
         console.warn('No question attempt to update');
         return null;
     }
@@ -108,7 +108,7 @@ async function updateQuestionAttempt(qprefix, score, maxScore, isCorrect) {
     try {
         const attempt = currentAttempts[qprefix];
         
-        const { data, error } = await supabase
+        const { data, error } = await window.supabase
             .from('question_attempts')
             .update({
                 submitted_at: new Date().toISOString(),
@@ -138,14 +138,77 @@ async function updateQuestionAttempt(qprefix, score, maxScore, isCorrect) {
 
 // Track input interactions
 async function trackInput(qprefix, inputName, inputValue, inputType, isFinalAnswer = false, validationResult = null) {
-    if (!supabase || !currentSession || !currentAttempts[qprefix]) {
+    if (!window.supabase || !currentSession) {
+        return null;
+    }
+
+    // Ensure we have a valid attempt before tracking
+    if (!currentAttempts[qprefix]) {
+        console.warn('No question attempt found for input tracking, skipping:', qprefix);
         return null;
     }
 
     try {
         const attempt = currentAttempts[qprefix];
         
-        const { data, error } = await supabase
+        // Verify the attempt exists in database before tracking inputs
+        const { data: attemptExists } = await window.supabase
+            .from('question_attempts')
+            .select('id')
+            .eq('id', attempt.id)
+            .maybeSingle();
+            
+        if (!attemptExists) {
+            console.error('Attempt not found in database:', attempt.id);
+            return null;
+        }
+        
+        // For final answers, consolidate all related inputs into one record
+        if (isFinalAnswer) {
+            return await trackConsolidatedInput(attempt, inputName, inputValue, inputType, validationResult);
+        }
+        
+        // For regular input tracking, continue as before but limit frequency
+        return await trackRegularInput(attempt, inputName, inputValue, inputType, validationResult);
+
+    } catch (error) {
+        console.error('Input tracking failed:', error);
+        return null;
+    }
+}
+
+// Track consolidated final answer (groups matrix/complex inputs)
+async function trackConsolidatedInput(attempt, inputName, inputValue, inputType, validationResult) {
+    // Check if we already have a final answer record for this input
+    const { data: existing, error: queryError } = await window.supabase
+        .from('input_tracking')
+        .select('id')
+        .eq('attempt_id', attempt.id)
+        .eq('input_name', inputName)
+        .eq('is_final_answer', true)
+        .maybeSingle();
+    
+    if (existing) {
+        // Update existing final answer record
+        const { data, error } = await window.supabase
+            .from('input_tracking')
+            .update({
+                input_value: inputValue,
+                validation_result: validationResult,
+                timestamp: new Date().toISOString()
+            })
+            .eq('id', existing.id)
+            .select()
+            .single();
+            
+        if (error) {
+            console.error('Error updating consolidated input:', error);
+            return null;
+        }
+        return data;
+    } else {
+        // Create new final answer record
+        const { data, error } = await window.supabase
             .from('input_tracking')
             .insert([
                 {
@@ -154,7 +217,7 @@ async function trackInput(qprefix, inputName, inputValue, inputType, isFinalAnsw
                     input_name: inputName,
                     input_value: inputValue,
                     input_type: inputType,
-                    is_final_answer: isFinalAnswer,
+                    is_final_answer: true,
                     validation_result: validationResult
                 }
             ])
@@ -162,26 +225,51 @@ async function trackInput(qprefix, inputName, inputValue, inputType, isFinalAnsw
             .single();
 
         if (error) {
-            console.error('Error tracking input:', error);
+            console.error('Error creating consolidated input:', error);
             return null;
         }
-
         return data;
+    }
+}
 
-    } catch (error) {
-        console.error('Input tracking failed:', error);
+// Track regular input interactions (with throttling)
+async function trackRegularInput(attempt, inputName, inputValue, inputType, validationResult) {
+    // Only track significant changes, not every keystroke
+    if (inputValue === '' || inputValue === 'EMPTY') {
+        return null; // Skip empty values
+    }
+    
+    const { data, error } = await window.supabase
+        .from('input_tracking')
+        .insert([
+            {
+                attempt_id: attempt.id,
+                session_id: currentSession.id,
+                input_name: inputName,
+                input_value: inputValue,
+                input_type: inputType,
+                is_final_answer: false,
+                validation_result: validationResult
+            }
+        ])
+        .select()
+        .single();
+
+    if (error) {
+        console.error('Error tracking regular input:', error);
         return null;
     }
+    return data;
 }
 
 // End current session
 async function endDatabaseSession() {
-    if (!supabase || !currentSession) {
+    if (!window.supabase || !currentSession) {
         return;
     }
 
     try {
-        const { error } = await supabase
+        const { error } = await window.supabase
             .from('learning_sessions')
             .update({
                 session_end: new Date().toISOString()

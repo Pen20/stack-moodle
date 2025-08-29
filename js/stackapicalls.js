@@ -141,16 +141,18 @@ function send(qfile, qname, qprefix) {
               }
               console.log(event.target);
               
-              // Track input interaction in database
+              // Track input interaction in database (with delay to ensure attempt exists)
               if (window.databaseTracking) {
-                const inputDetails = window.databaseTracking.getInputDetails(event.target);
-                window.databaseTracking.trackInput(
-                  qprefix, 
-                  inputName, 
-                  inputDetails.value, 
-                  inputDetails.type, 
-                  false // not final answer
-                );
+                setTimeout(() => {
+                  const inputDetails = window.databaseTracking.getInputDetails(event.target);
+                  window.databaseTracking.trackInput(
+                    qprefix, 
+                    inputName, 
+                    inputDetails.value, 
+                    inputDetails.type, 
+                    false // not final answer
+                  );
+                }, 100); // Small delay to ensure attempt is created
               }
               
               timeOutHandler[event.target.id] = window.setTimeout(validate.bind(null, event.target, qfile, qname, qprefix), 1000);
@@ -188,9 +190,12 @@ function send(qfile, qname, qprefix) {
     }
   };
   collectData(qfile, qname, qprefix).then(async (data)=>{
-    // Create question attempt in database
+    // Create question attempt in database and wait for completion
     if (window.databaseTracking) {
-      await window.databaseTracking.createQuestionAttempt(qfile, qname, qprefix, data.seed);
+      const attempt = await window.databaseTracking.createQuestionAttempt(qfile, qname, qprefix, data.seed);
+      if (!attempt) {
+        console.error('Failed to create question attempt, database tracking may not work properly');
+      }
     }
     
     let submitbutton = document.getElementById(`${qprefix + 'stackapi_qtext'}`).querySelector('input[type="button"]');
@@ -355,17 +360,17 @@ function answer(qfile, qname, qprefix, seed) {
   collectData(qfile, qname, qprefix).then(async (data) => {
     data.seed = seed;
     
-    // Track final answers in database
+    // Track final answers in database (consolidated)
     if (window.databaseTracking && data.answers) {
-      for (const [inputName, inputValue] of Object.entries(data.answers)) {
-        await window.databaseTracking.trackInput(
-          qprefix, 
-          inputName, 
-          inputValue, 
-          'final_submission', 
-          true // is final answer
-        );
-      }
+      // Consolidate all answers into a single JSON object for cleaner database
+      const consolidatedAnswers = JSON.stringify(data.answers);
+      await window.databaseTracking.trackInput(
+        qprefix, 
+        'final_answers', 
+        consolidatedAnswers, 
+        'final_submission', 
+        true // is final answer
+      );
     }
     
     http.send(JSON.stringify(data));
