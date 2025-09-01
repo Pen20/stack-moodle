@@ -16,8 +16,8 @@
 <script>
 // Initialize Supabase client globally
 const SUPABASE_CONFIG = {
-    url: 'https://pbgubbwkvzgfifvdjdvt.supabase.co',
-    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBiZ3ViYndrdnpnZmlmdmRqZHZ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYzNzQxNDEsImV4cCI6MjA3MTk1MDE0MX0.mSTHMDvIyJCavDwl5ygBzGzno28be5MlUbyUtvOQCdM'
+    url: window.env.SUPABASE_URL,
+    anonKey: window.env.SUPABASE_ANON_KEY
 };
 
 // Wait for Supabase library to load, then initialize
