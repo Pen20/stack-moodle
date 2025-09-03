@@ -5,6 +5,21 @@
 let currentSession = null;
 let currentAttempts = {}; // Track attempts by question prefix
 
+function formatSupabaseError(err) {
+    if (!err) return 'Unknown error';
+    if (typeof err === 'string') return err;
+    const parts = [];
+    if (err.message) parts.push(err.message);
+    if (err.code) parts.push(`code=${err.code}`);
+    if (err.details) parts.push(`details=${err.details}`);
+    if (err.hint) parts.push(`hint=${err.hint}`);
+    try {
+        const rest = JSON.stringify(err);
+        if (rest && rest !== '{}') parts.push(rest);
+    } catch (_) {}
+    return parts.join(' | ');
+}
+
 // Generate anonymous user identifier
 function generateAnonymousId() {
     // Check if we already have one stored
@@ -19,7 +34,7 @@ function generateAnonymousId() {
 
 // Initialize database session when page loads
 async function initializeDatabaseSession() {
-    if (!window.supabase) {
+    if (!supabase) {
         console.warn('Supabase not configured - database tracking disabled');
         return null;
     }
@@ -28,20 +43,36 @@ async function initializeDatabaseSession() {
         const anonymousId = generateAnonymousId();
         
         // Create learning session
-        const { data, error } = await window.supabase
+        let insertPayload = {
+            page_url: window.location.href,
+            user_agent: navigator.userAgent,
+            anonymous_id: anonymousId
+        };
+
+        let result = await supabase
             .from('learning_sessions')
-            .insert([
-                {
-                    page_url: window.location.href,
-                    user_agent: navigator.userAgent,
-                    anonymous_id: anonymousId
-                }
-            ])
+            .insert([insertPayload])
             .select()
             .single();
 
+        let { data, error } = result;
+
+        // Fallback if anonymous_id column doesn't exist (Postgres code 42703)
+        if (error && (error.code === '42703' || /anonymous_id/i.test(error.message || ''))) {
+            console.warn('anonymous_id column missing; retrying without it');
+            const fallbackPayload = {
+                page_url: window.location.href,
+                user_agent: navigator.userAgent
+            };
+            ({ data, error } = await supabase
+                .from('learning_sessions')
+                .insert([fallbackPayload])
+                .select()
+                .single());
+        }
+
         if (error) {
-            console.error('Error creating learning session:', error);
+            console.error('Error creating learning session:', formatSupabaseError(error));
             return null;
         }
 
@@ -50,14 +81,14 @@ async function initializeDatabaseSession() {
         return data;
 
     } catch (error) {
-        console.error('Database session initialization failed:', error);
+        console.error('Database session initialization failed:', formatSupabaseError(error));
         return null;
     }
 }
 
 // Create question attempt record
 async function createQuestionAttempt(qfile, qname, qprefix, seed) {
-    if (!window.supabase || !currentSession) {
+    if (!supabase || !currentSession) {
         console.warn('Database not available for question attempt tracking');
         return null;
     }
@@ -67,7 +98,7 @@ async function createQuestionAttempt(qfile, qname, qprefix, seed) {
         const existingAttempt = currentAttempts[qprefix];
         const attemptNumber = existingAttempt ? existingAttempt.attempt_number + 1 : 1;
 
-        const { data, error } = await window.supabase
+        const { data, error } = await supabase
             .from('question_attempts')
             .insert([
                 {
@@ -83,7 +114,7 @@ async function createQuestionAttempt(qfile, qname, qprefix, seed) {
             .single();
 
         if (error) {
-            console.error('Error creating question attempt:', error);
+            console.error('Error creating question attempt:', formatSupabaseError(error));
             return null;
         }
 
@@ -93,14 +124,14 @@ async function createQuestionAttempt(qfile, qname, qprefix, seed) {
         return data;
 
     } catch (error) {
-        console.error('Question attempt creation failed:', error);
+        console.error('Question attempt creation failed:', formatSupabaseError(error));
         return null;
     }
 }
 
 // Update question attempt with submission results
 async function updateQuestionAttempt(qprefix, score, maxScore, isCorrect) {
-    if (!window.supabase || !currentAttempts[qprefix]) {
+    if (!supabase || !currentAttempts[qprefix]) {
         console.warn('No question attempt to update');
         return null;
     }
@@ -108,7 +139,7 @@ async function updateQuestionAttempt(qprefix, score, maxScore, isCorrect) {
     try {
         const attempt = currentAttempts[qprefix];
         
-        const { data, error } = await window.supabase
+        const { data, error } = await supabase
             .from('question_attempts')
             .update({
                 submitted_at: new Date().toISOString(),
@@ -121,7 +152,7 @@ async function updateQuestionAttempt(qprefix, score, maxScore, isCorrect) {
             .single();
 
         if (error) {
-            console.error('Error updating question attempt:', error);
+            console.error('Error updating question attempt:', formatSupabaseError(error));
             return null;
         }
 
@@ -131,14 +162,14 @@ async function updateQuestionAttempt(qprefix, score, maxScore, isCorrect) {
         return data;
 
     } catch (error) {
-        console.error('Question attempt update failed:', error);
+        console.error('Question attempt update failed:', formatSupabaseError(error));
         return null;
     }
 }
 
 // Track input interactions
 async function trackInput(qprefix, inputName, inputValue, inputType, isFinalAnswer = false, validationResult = null) {
-    if (!window.supabase || !currentSession) {
+    if (!supabase || !currentSession) {
         return null;
     }
 
@@ -152,7 +183,7 @@ async function trackInput(qprefix, inputName, inputValue, inputType, isFinalAnsw
         const attempt = currentAttempts[qprefix];
         
         // Verify the attempt exists in database before tracking inputs
-        const { data: attemptExists } = await window.supabase
+        const { data: attemptExists } = await supabase
             .from('question_attempts')
             .select('id')
             .eq('id', attempt.id)
@@ -172,7 +203,7 @@ async function trackInput(qprefix, inputName, inputValue, inputType, isFinalAnsw
         return null;
 
     } catch (error) {
-        console.error('Input tracking failed:', error);
+        console.error('Input tracking failed:', formatSupabaseError(error));
         return null;
     }
 }
@@ -180,7 +211,7 @@ async function trackInput(qprefix, inputName, inputValue, inputType, isFinalAnsw
 // Track consolidated final answer (groups matrix/complex inputs)
 async function trackConsolidatedInput(attempt, inputName, inputValue, inputType, validationResult) {
     // Check if we already have a final answer record for this input
-    const { data: existing, error: queryError } = await window.supabase
+    const { data: existing } = await supabase
         .from('input_tracking')
         .select('id')
         .eq('attempt_id', attempt.id)
@@ -190,7 +221,7 @@ async function trackConsolidatedInput(attempt, inputName, inputValue, inputType,
     
     if (existing) {
         // Update existing final answer record
-        const { data, error } = await window.supabase
+        const { data, error } = await supabase
             .from('input_tracking')
             .update({
                 input_value: inputValue,
@@ -202,13 +233,13 @@ async function trackConsolidatedInput(attempt, inputName, inputValue, inputType,
             .single();
             
         if (error) {
-            console.error('Error updating consolidated input:', error);
+            console.error('Error updating consolidated input:', formatSupabaseError(error));
             return null;
         }
         return data;
     } else {
         // Create new final answer record
-        const { data, error } = await window.supabase
+        const { data, error } = await supabase
             .from('input_tracking')
             .insert([
                 {
@@ -225,7 +256,7 @@ async function trackConsolidatedInput(attempt, inputName, inputValue, inputType,
             .single();
 
         if (error) {
-            console.error('Error creating consolidated input:', error);
+            console.error('Error creating consolidated input:', formatSupabaseError(error));
             return null;
         }
         return data;
@@ -239,7 +270,7 @@ async function trackRegularInput(attempt, inputName, inputValue, inputType, vali
         return null; // Skip empty values
     }
     
-    const { data, error } = await window.supabase
+    const { data, error } = await supabase
         .from('input_tracking')
         .insert([
             {
@@ -256,7 +287,7 @@ async function trackRegularInput(attempt, inputName, inputValue, inputType, vali
         .single();
 
     if (error) {
-        console.error('Error tracking regular input:', error);
+        console.error('Error tracking regular input:', formatSupabaseError(error));
         return null;
     }
     return data;
@@ -264,12 +295,12 @@ async function trackRegularInput(attempt, inputName, inputValue, inputType, vali
 
 // End current session
 async function endDatabaseSession() {
-    if (!window.supabase || !currentSession) {
+    if (!supabase || !currentSession) {
         return;
     }
 
     try {
-        const { error } = await window.supabase
+        const { error } = await supabase
             .from('learning_sessions')
             .update({
                 session_end: new Date().toISOString()
@@ -277,13 +308,13 @@ async function endDatabaseSession() {
             .eq('id', currentSession.id);
 
         if (error) {
-            console.error('Error ending session:', error);
+            console.error('Error ending session:', formatSupabaseError(error));
         } else {
             console.log('Database session ended');
         }
 
     } catch (error) {
-        console.error('Session end failed:', error);
+        console.error('Session end failed:', formatSupabaseError(error));
     }
 }
 
