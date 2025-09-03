@@ -168,8 +168,8 @@ async function trackInput(qprefix, inputName, inputValue, inputType, isFinalAnsw
             return await trackConsolidatedInput(attempt, inputName, inputValue, inputType, validationResult);
         }
         
-        // For regular input tracking, continue as before but limit frequency
-        return await trackRegularInput(attempt, inputName, inputValue, inputType, validationResult);
+        // Skip regular input tracking - only track final answers
+        return null;
 
     } catch (error) {
         console.error('Input tracking failed:', error);

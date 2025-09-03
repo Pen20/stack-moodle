@@ -141,19 +141,7 @@ function send(qfile, qname, qprefix) {
               }
               console.log(event.target);
               
-              // Track input interaction in database (with delay to ensure attempt exists)
-              if (window.databaseTracking) {
-                setTimeout(() => {
-                  const inputDetails = window.databaseTracking.getInputDetails(event.target);
-                  window.databaseTracking.trackInput(
-                    qprefix, 
-                    inputName, 
-                    inputDetails.value, 
-                    inputDetails.type, 
-                    false // not final answer
-                  );
-                }, 100); // Small delay to ensure attempt is created
-              }
+              // Removed input tracking - only track final submissions
               
               timeOutHandler[event.target.id] = window.setTimeout(validate.bind(null, event.target, qfile, qname, qprefix), 1000);
             };
@@ -189,15 +177,7 @@ function send(qfile, qname, qprefix) {
       }
     }
   };
-  collectData(qfile, qname, qprefix).then(async (data)=>{
-    // Create question attempt in database and wait for completion
-    if (window.databaseTracking) {
-      const attempt = await window.databaseTracking.createQuestionAttempt(qfile, qname, qprefix, data.seed);
-      if (!attempt) {
-        console.error('Failed to create question attempt, database tracking may not work properly');
-      }
-    }
-    
+  collectData(qfile, qname, qprefix).then((data)=>{
     let submitbutton = document.getElementById(`${qprefix + 'stackapi_qtext'}`).querySelector('input[type="button"]');
     submitbutton.addEventListener('click', function() {answer(qfile, qname, qprefix, data.seed)});
     http.send(JSON.stringify(data));
@@ -290,9 +270,36 @@ function answer(qfile, qname, qprefix, seed) {
         document.getElementById(`${qprefix+'stackapi_score'}`).style.display = 'block';
         document.getElementById(`${qprefix+'response_summary'}`).innerText = json.responsesummary;
         
-        // Update question attempt in database with results
+        // Create and update question attempt in database with results
         if (window.databaseTracking) {
-          await window.databaseTracking.updateQuestionAttempt(qprefix, finalScore, maxScore, isCorrect);
+          // Create attempt only when user submits (not on page load)
+          const answers = collectAnswer(qprefix);
+          const attempt = await window.databaseTracking.createQuestionAttempt(qfile, qname, qprefix, seed);
+          
+          if (attempt) {
+            await window.databaseTracking.updateQuestionAttempt(qprefix, finalScore, maxScore, isCorrect);
+            
+            // Track final answers with validation results
+            const consolidatedAnswers = JSON.stringify(answers);
+            
+            const validationResults = {
+              score: json.score,
+              maxScore: json.scoreweights?.total || 1,
+              isCorrect: json.score >= 1.0,
+              responseSummary: json.responsesummary,
+              specificFeedback: json.specificfeedback,
+              prts: json.prts
+            };
+            
+            await window.databaseTracking.trackInput(
+              qprefix, 
+              'final_answers', 
+              consolidatedAnswers, 
+              'final_submission', 
+              true, // is final answer
+              JSON.stringify(validationResults) // validation results
+            );
+          }
         }
 
         // Show General feedback and correct answers, hide summary
@@ -357,22 +364,8 @@ function answer(qfile, qname, qprefix, seed) {
   }
   document.getElementById(`${qprefix+'stackapi_score'}`).style.display = 'none';
   document.getElementById(`${qprefix+'stackapi_validity'}`).innerText = '';
-  collectData(qfile, qname, qprefix).then(async (data) => {
+  collectData(qfile, qname, qprefix).then((data) => {
     data.seed = seed;
-    
-    // Track final answers in database (consolidated)
-    if (window.databaseTracking && data.answers) {
-      // Consolidate all answers into a single JSON object for cleaner database
-      const consolidatedAnswers = JSON.stringify(data.answers);
-      await window.databaseTracking.trackInput(
-        qprefix, 
-        'final_answers', 
-        consolidatedAnswers, 
-        'final_submission', 
-        true // is final answer
-      );
-    }
-    
     http.send(JSON.stringify(data));
   });
 }
@@ -442,7 +435,7 @@ function loadQuestionFromFile(fileContents, questionName) {
   const xmlDoc = parser.parseFromString(fileContents, "text/xml");
 
   let thequestion = null;
-  let randSeed = "";
+  let randSeed = null;
   for (const question of xmlDoc.getElementsByTagName("question")) {
     if (question.getAttribute('type').toLowerCase() === 'stack' && (!questionName || question.querySelectorAll("name text")[0].textContent === questionName)) {
       thequestion = question.outerHTML;
