@@ -1,0 +1,790 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+<!-- question: 54274  -->
+  <question type="stack">
+    <name>
+      <text>Planes curves and Parametric Equations: Question 6</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p> Find the tangent line (s) to the parametric curve given by \(x ={@xx@} \) and \(y ={@yy@} \), \( (t \in \mathbb{R}) \)  at the point \(({@pt_x@},{@pt_y@})\).</p>
+<br>We proceed as follows
+<br><b>Step 1: </b> Find \( \displaystyle \frac{dy}{dx}\)
+<br>\( \displaystyle \frac{dy}{dx}=\) [[input:ans1]] [[validation:ans1]] [[feedback:prt1]]
+<br><b>Step 2: </b> Find all roots of \(x\).
+<br> Hint: For example the roots are typed as follows: <b>[t=2, t=-1, t=4]</b>.
+<br>The roots of \(x=0\) are [[input:ans2]] [[validation:ans2]] [[feedback:prt2]] 
+ <br><b>Step 3: </b> Find the exact number of tangent line(s) at \(({@pt_x@},{@pt_y@})\).
+<br> We claim that the number of tangent line(s) will be \({@ta_nbr@}\): [[input:ans_test]]  [[validation:ans_test]] [[feedback:prt_test]]<button id="btn1yes" type="button" style="font-size:16px" onclick="reveal('1');">Continue</button>
+<div id="input1" style="display:none;">[[input:ans_yn1]] [[validation:ans_yn1]]</div>
+<br>
+<div id="example1" style="display:none;">
+  Enter your tangent number(s): [[input:ans3]] [[validation:ans3]] [[feedback:prt3]]
+<br> For \(t=0\), no tangent and \((x,y)=\) [[input:ans4]] [[validation:ans4]] [[feedback:prt4]]
+<br> <b>Hint</b> For example to type the coordinates of point \((5,-6)\), you input <b>oo(5,-6)</b>.
+<br> For \(t={@aa@}\):  \( \displaystyle \frac{dy}{dx}=\) [[input:ans7]] [[validation:ans7]],  and the tangent line is [[input:ans9]] [[validation:ans9]] at the point \((x,y)=\) [[input:ans5]]   [[validation:ans5]] [[feedback:prtA]]
+<br> For \(t={@bb@}\):  \( \displaystyle \frac{dy}{dx}=\)[[input:ans8]] [[validation:ans8]], and the tangent line is [[input:ans10]] [[validation:ans10]] at the point \((x,y)={@ta_6@} \) [[input:ans6]] [[validation:ans6]]  [[feedback:prtB]]
+
+
+
+</div>
+
+
+
+<script>
+    function reveal(s) {
+        document.querySelector("#input" + s).querySelector("input").value = "true";
+        document.querySelector("#example" + s).style.display = "block";
+        document.querySelector("#btn" + s + "yes").style["font-size"] = "24px";
+        document.querySelector("#btn" + s + "no").style["font-size"] = "16px";
+    }
+
+    function hide(s) {
+        document.querySelector("#input" + s).querySelector("input").value = "false";
+        document.querySelector("#example" + s).style.display = "none";
+        document.querySelector("#btn" + s + "yes").style["font-size"] = "16px";
+        document.querySelector("#btn" + s + "no").style["font-size"] = "24px";
+    }
+</script>
+
+<script>
+    window.onload = function() {
+        for (const s of ['1', '2']) {
+            if (document.querySelector("#input" + s).querySelector("input").value == "true") {
+                reveal(s);
+            } else if (document.querySelector("#input" + s).querySelector("input").value == "false") {
+                hide(s)
+            }
+        }
+    };
+</script>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><b>Worked solution</b></p>
+<p> Find the tangent line (s) to the parametric curve given by \(x ={@xx@} \) and \(y ={@yy@} \), \( (t \in \mathbb{R}) \) at the point \(({@pt_x@},{@pt_y@})\).</p>
+<p>We proceed as follows</p>
+<p><b>Step 1: </b> Find \(\frac{dy}{dt}\) </p>
+<p>We know that \(\displaystyle \frac{dy}{dt} ={@dif_y_t@}\) and \(\frac{dx}{dt} ={@dif_x_t@}\). Then,</p>
+<p>\(
+\begin{align}
+\displaystyle \frac{dy}{dx} & = & \displaystyle \frac{\frac{dy}{dt}}{\frac{dx}{dt}} \\
+\displaystyle \frac{dy}{dx} & = &{@ta_1@}\\
+\end{align}
+\)</p>
+<p><b>Step 2: </b> Find all roots of \(x\).</p>
+<p>This means we set \(x=0\)</p>
+<p>\(
+\begin{align}
+x=0  & \implies & {@xx=0@} \\
+ & \implies & {@ta_2@}\\
+\end{align}
+\)</p>
+<p><b>Step 3: </b> Find the exact number of tangent line(s) at \(({@pt_x@},{@pt_y@})\).</p>
+<p>Tangent number(s): {@ta_3@}.</p>
+<p> For \(t=0\), no tangent and \((x,y)={@ta_4@}\).</p>
+<p> For \(t={@aa@}\):  \(\displaystyle \frac{dy}{dx}= {@ta_7@} \),  and the tangent line is \({@ta_9_sol@}\) at the point \((x,y)={@ta_5@} \)   </p>
+<p> For \(t={@bb@}\):  \(\displaystyle \frac{dy}{dx}= {@ta_8@} \), and the tangent line is \({@ta_10_sol@}\) at the point \((x,y)={@ta_6@} \)</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <stackversion>
+      <text>2022071300</text>
+    </stackversion>
+    <questionvariables>
+      <text><![CDATA[/*Define the randomisation coefficients*/
+aa: rand_with_step(-4,-1,1);
+bb: rand_with_step(1,4,1);
+cc: 1;
+n1: rand(3)+1;
+n2: 2;
+/*Equation of the curve*/
+xx: expand(t^n1*(t-aa)*(t-bb));
+yy: cc*t^n2;
+/*Coordinates of the point P*/
+pt_x: 0;
+pt_y:  rand([1,4,9,16]);
+
+/*Differentiate y with respect to t*/
+dif_y_t: diff(yy,t);
+/*Differentiate x with respect to t*/
+dif_x_t: diff(xx,t);
+/*Solve \(x=0\)*/
+ expr: dif_y_t/dif_x_t; /*Expression of dy/dx*/
+ta_2: solve(xx,t);
+
+/*Evaluate the differentiation of dy/dx at t=aa*/
+dif_t_aa: at(expr, [t=aa]); 
+
+/*Evaluate the differentiation of dy/dx at t=bb*/
+dif_t_bb: at(expr, [t=bb]);
+
+
+
+/*Model answers*/
+ta_1: dif_y_t/dif_x_t;
+ta_2: solve(xx,t);
+ta_3a: at(yy, [t=aa]);
+ta_3b: at(yy, [t=bb]);
+ta_3: if ta_3a=ta_3b and ta_3b=pt_y then 2 else (if ta_3a=pt_y and ta_3b # pt_y then 1 else (if ta_3a # pt_y and ta_3b = pt_y then 1 else 0)); /*find the exact number of tangent*/
+ta_4a: at(xx, [t=0]); /*abscissa of  the origin observed at t=0*/
+ta_4b: at (yy, [t=0]); /*ordinate of the origin observed at t=0*/
+ta_4: oo(ta_4a, ta_4b); /*Coordinate of the origin observed at t=0*/
+
+ta_5a: at(xx, [t=aa]); /*abscissa of the point observed at t=aa*/
+ta_5b: at (yy, [t=aa]); /*ordinate of the point observed at t=aa*/
+ta_5: oo(ta_5a, ta_5b); /*Coordinate of the point observed at t=aa*/
+
+ta_6a: at(xx, [t=bb]); /*abscissa of the point observed at t=bb*/
+ta_6b: at (yy, [t=bb]); /*ordinate of the point observed at t=bb*/
+ta_6: oo(ta_6a, ta_6b); /*Coordinate of the point observed at t=bb*/
+
+ta_7: dif_t_aa; /*Evaluate the differentiation of dy/dx at t=aa*/
+ta_8: dif_t_bb; /*Evaluate the differentiation of dy/dx at t=bb*/
+ta_9: if aa # 0 then y=expand(dif_t_aa*(x-ta_5a)+ta_5b) else 0; /*Tangent at t=aa*/
+ta_10: if bb # 0 then y=expand(dif_t_bb*(x-ta_6a)+ta_6b) else 0; /*Tangent at t=bb*/
+
+/*JavaScript*/
+ta_nbr: rand([0,2,1]); /*Statement to reveal or not hidden question*/
+
+ta_test: if ta_nbr=ta_3 then true else false;
+
+ta_yn1: true; /*Reveal or hide question button*/
+
+
+/*Worked solution*/
+ta_9_sol: if aa # 0 then y=expand(dif_t_aa*(x-ta_5a)+ta_5b) else "no tangent"; /*Tangent at t=aa*/
+ta_10_sol: if bb # 0 then y=expand(dif_t_bb*(x-ta_6a)+ta_6b) else "no tangent"; /*Tangent at t=bb*/]]></text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text></text>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text><![CDATA[<p> \( \frac{dy}{dx}  = {@ta_1@}\). For \(x=0  \implies  {@xx=0@}\).</p>
+<p>Tangent number(s): {@ta_3@}.</p>
+<p> For \(t=0\), no tangent and \((x,y)={@ta_4@}\).</p>
+<p> For \(t={@aa@}\):  \( \frac{dy}{dx}= {@ta_7@} \),  and the tangent line is \({@ta_9_sol@}\) at the point \((x,y)={@ta_5@} \)   </p>
+<p> For \(t={@bb@}\):  \( \frac{dy}{dx}= {@ta_8@} \), and the tangent line is \({@ta_10_sol@}\) at the point \((x,y)={@ta_6@} \)</p>]]></text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text></text>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i> Your answer is partially correct.</span>]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <variantsselectionseed></variantsselectionseed>
+    <input>
+      <name>ans_test</name>
+      <type>boolean</type>
+      <tans>ta_test</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ans_yn1</name>
+      <type>algebraic</type>
+      <tans>ta_yn1</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>ta_1</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>3</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ans10</name>
+      <type>algebraic</type>
+      <tans>ta_10</tans>
+      <boxsize>7</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>3</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>algebraic</type>
+      <tans>ta_2</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>3</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ans3</name>
+      <type>algebraic</type>
+      <tans>ta_3</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>3</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ans4</name>
+      <type>algebraic</type>
+      <tans>ta_4</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>3</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ans5</name>
+      <type>algebraic</type>
+      <tans>ta_5</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>3</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ans6</name>
+      <type>algebraic</type>
+      <tans>ta_6</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>3</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ans7</name>
+      <type>algebraic</type>
+      <tans>ta_7</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>3</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ans8</name>
+      <type>algebraic</type>
+      <tans>ta_8</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>3</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ans9</name>
+      <type>algebraic</type>
+      <tans>ta_9</tans>
+      <boxsize>7</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>3</showvalidation>
+      <options></options>
+    </input>
+    <prt>
+      <name>prt_test</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description></description>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans_test</sans>
+        <tans>ta_test</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt_test-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt_test-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description></description>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>ta_1</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text>You use the formula: \( \displaystyle \frac{dy}{dx} = \frac{\frac{dy}{dt}}{\frac{dx}{dt}} \). Check the work solution</text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description></description>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>ta_2</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt3</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description></description>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans3</sans>
+        <tans>ta_3</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt3-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt3-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt4</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description></description>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans4</sans>
+        <tans>ta_4</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt4-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt4-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prtA</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description></description>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans9</sans>
+        <tans>ta_9</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prtA-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prtA-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description></description>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans7</sans>
+        <tans>ta_7</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>2</truenextnode>
+        <trueanswernote>prtA-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prtA-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description></description>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans5</sans>
+        <tans>ta_5</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prtA-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prtA-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prtB</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description></description>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans8</sans>
+        <tans>ta_8</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prtB-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prtB-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description></description>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans10</sans>
+        <tans>ta_10</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>2</truenextnode>
+        <trueanswernote>prtB-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prtB-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description></description>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans6</sans>
+        <tans>ta_6</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prtB-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prtB-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <deployedseed>1316203166</deployedseed>
+    <deployedseed>333889929</deployedseed>
+    <deployedseed>1463988857</deployedseed>
+    <deployedseed>78636198</deployedseed>
+    <deployedseed>636043016</deployedseed>
+    <deployedseed>779183848</deployedseed>
+    <deployedseed>1650160346</deployedseed>
+    <deployedseed>629339534</deployedseed>
+    <deployedseed>710871053</deployedseed>
+    <deployedseed>1099397735</deployedseed>
+    <deployedseed>1951772641</deployedseed>
+    <deployedseed>1500539490</deployedseed>
+    <deployedseed>1114127107</deployedseed>
+    <deployedseed>274037987</deployedseed>
+    <deployedseed>2108913926</deployedseed>
+    <deployedseed>1984591608</deployedseed>
+    <deployedseed>1822412339</deployedseed>
+    <deployedseed>1754056713</deployedseed>
+    <deployedseed>75667105</deployedseed>
+    <deployedseed>616066588</deployedseed>
+    <deployedseed>353452773</deployedseed>
+    <deployedseed>73260200</deployedseed>
+    <deployedseed>1723144522</deployedseed>
+    <deployedseed>1798450702</deployedseed>
+    <deployedseed>1236490043</deployedseed>
+    <deployedseed>1583232230</deployedseed>
+    <deployedseed>798190094</deployedseed>
+    <deployedseed>94237752</deployedseed>
+    <deployedseed>801751925</deployedseed>
+    <deployedseed>106184882</deployedseed>
+    <deployedseed>1881940389</deployedseed>
+    <deployedseed>243526710</deployedseed>
+    <deployedseed>1760688232</deployedseed>
+    <deployedseed>1323635266</deployedseed>
+    <deployedseed>1307395928</deployedseed>
+    <deployedseed>559182572</deployedseed>
+    <deployedseed>309308261</deployedseed>
+    <deployedseed>764890054</deployedseed>
+    <deployedseed>831251561</deployedseed>
+    <deployedseed>1255065046</deployedseed>
+    <deployedseed>630973075</deployedseed>
+  </question>
+
+</quiz>

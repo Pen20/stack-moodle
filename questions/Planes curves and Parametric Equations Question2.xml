@@ -1,0 +1,661 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+<!-- question: 140313  -->
+  <question type="stack">
+    <name>
+      <text>Planes curves and Parametric Equations: Question 2</text>
+    </name>
+    <questiontext format="moodle_auto_format">
+      <text><![CDATA[<p> Let \((E)=\{(x, y): {@xx@} \, \mbox{and} \, {@yy@}, t \in \mathbb{R} \} \).</p>
+<p> This means: \((E)\) represent the set of points \((x, y)\) such that \({@xx@}\) and \({@yy@}, t \in \mathbb{R}\).</p>
+<p>1.  Determine the equation of the parametric curve \((E)\).</p>
+ <br >So  \( (E): \) [[input:ans1]] [[validation:ans1]] [[feedback:prt1]]
+<br> 2. Determine the nature of \((E)\) in the following cases:
+<br> a) For \(t={@tt@}\), Nature: [[input:ans2]] [[validation:ans2]] [[feedback:prt2]]
+<br> b) For \(t \in \mathbb{R}\), Nature: [[input:ans3]] [[validation:ans3]] [[feedback:prt3]]
+<br> 3. By considering the case 2. b) such that \(y=f(x)\), precise the domain of definition \((D)\)
+ <br>  of the curve representating \(f\).
+<p> <b>Hint: </b> Simple real intervals may be represented when typing in the blanks as follows :<p>
+<div>
+    <table width="250" cellspacing="1" cellpadding="0" border="1">
+ <colgroup>
+            <col>
+            <col>
+    </colgroup>
+        <tbody>
+  <tr>
+    <th>Intervals</th>
+    <th>Stack notations</th>
+  </tr>
+  <tr>
+    <td>[a,b]</td>
+    <td>cc(a,b)</td>
+  </tr>
+  <tr>
+    <td>(a,b)</td>
+    <td>oo(a,b)</td>
+  </tr>
+  <tr>
+    <td>[a,b)</td>
+    <td>co(a,b)</td>
+  </tr>
+  <tr>
+    <td>(a,b]</td>
+    <td>oc(a,b)</td>
+  </tr>
+ <tr>
+    <td>(a, \(\infty\) )</td>
+    <td>oo(a,inf)</td>
+  </tr>
+ <tr>
+    <td>(\(-\infty\),b]</td>
+    <td>oc(-inf,b]</td>
+  </tr>
+ </tbody>
+</table>
+</div>
+<br> Thus \( (D)=\)  [[input:ans4]] [[validation:ans4]] [[feedback:prt4]]
+<p> 4. Sketch the plane curve: take \(0 \leq t \leq {@rand([2,4,6,8,10])@} \cdot \pi\). </p>
+<p><b>Hint:</b> For sketching, you used the sliders 'a', 'b' and 'c'.</p>
+<center>
+[[jsxgraph width="600px" height="600px" input-ref-ansa='ansaRef'
+ input-ref-ansb='ansbRef'
+ input-ref-ansc='anscRef']]               
+                var brd = JXG.JSXGraph.initBoard(divid, {boundingbox: [-8, 8, 8, -8], axis:true}),
+    a = brd.create('slider',[[2,-5],[7,-5],[-5,{#a_init#},5]], {name:'a', snapWidth: 0.5}),
+    b = brd.create('slider',[[2,-6],[7,-6],[-5,{#a_init#},5]], {name:'b', snapWidth: 0.5}),
+    c = brd.create('slider',[[2,-7],[7,-7],[-5,{#a_init#},5]], {name:'c', snapWidth: 0.5}),
+
+    f = brd.create('functiongraph',[function(x){
+            return a.Value()*x*x + b.Value()*x + c.Value();
+        }]);
+
+        stack_jxg.bind_slider(ansaRef,a); 
+        stack_jxg.bind_slider(ansbRef,b); 
+        stack_jxg.bind_slider(anscRef,c); 
+      
+        board.update();
+ [[/jsxgraph]]
+</center>
+<p style="visibility:hidden">[[input:ansa]] [[validation:ansa]] </p>
+<p style="visibility:hidden">[[input:ansb]] [[validation:ansb]] </p>
+<p style="visibility:hidden">[[input:ansc]] [[validation:ansc]] </p>
+<p style="visibility:hidden">[[feedback:prtA]] </p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text><![CDATA[<p><h3>Worked solution</h3></p>
+<p>Let \((E)=\{(x, y): {@xx@} \, \mbox{and} \, {@yy@}, t \in \mathbb{R} \} \).</p>
+<p>1.  Determine the equation of the parametric curve \((E)\).</p>
+<p>We need to eliminate \(t\) as follows:</p>
+<p>We have: \({@xx@}\) and \(y={@bb@}\cdot({@uu@})^2+{@ee@}\cdot{@(uu)@} \cdot x+{@dd@}\). </p>
+ So  \( (E): {@y=bb*x^2+ee*x+dd@}\).</p>
+<p> 2. Determine the nature of \((E)\) in the following cases:</p>
+<p> a) For \(t={@tt@}\), (x, y)= ({@val_x@},{@val_y@}). Then \((E)\) is a {@mcq_correct(ta_2)[1]@}.</p>
+<p> b) For \(t \in \mathbb{R}\), we have  \( (E): {@y=bb*x^2+ee*x+dd@}\). Then \((E)\) is a {@mcq_correct(ta_3)[1]@}.</p>
+<p> 3. By considering the case 2. b) such that \(y=f(x)\), precise the domain of definition \(D\)
+ <p>  of the curve representing \(f\).</p>
+<p>Since  \( \forall t, -1 \leq {@sinsol@} \leq 1\), we have \(-{@ff@} \leq x \leq {@ff@} \). Thus \(D= {@ta_4@} \)</p>
+<p> 4. Sketch the plane curve with \(t \in \mathbb{R}\). </p>
+<p><b>Hint:</b> For sketching, you used the sliders 'a', 'b' and 'c'.</p>
+<center>
+[[jsxgraph width="600px" height="600px" input-ref-ansa='ansaRef'
+ input-ref-ansb='ansbRef'
+ input-ref-ansc='anscRef']]               
+                var brd = JXG.JSXGraph.initBoard(divid, {boundingbox: [-8, 8, 8, -8], axis:true, Copyright: false}),
+    a = brd.create('slider',[[2,-5],[7,-5],[-5,{#a_cor#},5]], {name:'a'}),
+    b = brd.create('slider',[[2,-6],[7,-6],[-5,{#b_cor#},5]], {name:'b'}),
+    c = brd.create('slider',[[2,-7],[7,-7],[-5,{#c_cor#},5]], {name:'c'}),
+
+    f = brd.create('functiongraph',[function(x){
+            return a.Value()*x*x + b.Value()*x + c.Value();
+        }]);
+         
+        board.update();
+ [[/jsxgraph]]
+</center>]]></text>
+    </generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <stackversion>
+      <text>2023060500</text>
+    </stackversion>
+    <questionvariables>
+      <text><![CDATA[/*Randomising the coefficients of the parametric curves*/
+aa: rand(5)+1;
+bb: rand_with_step(-5,5,1);
+ee: rand_with_step(-5,4,1);
+dd: rand_with_step(-3,5,1);
+
+/*Define the parametric curves*/
+ff: rand(4)+1; /*Coefficient for cos and sin*/
+ss: x=ff*sin(aa*t);
+cs: x=ff*cos(aa*t);
+xx: rand([ss,cs]);
+uu: if xx=ss then ff*sin(aa*t) else ff*cos(aa*t);
+yy: y=bb*uu^2+ee*uu+dd;
+
+/*Randomised the time t*/
+tt: rand([0, %pi, %pi/2, %pi/4, %pi/6, -%pi/2]);
+
+/*Model answers*/
+ta_1: y=bb*x^2+ee*x+dd; /*Equation of (E)*/
+ta_2: random_permutation([["Unit circle", false],["Point", true],["Line", false], ["tangent", false], ["Parabola", false]]); /*Nature of (E) as point*/
+ta_3a: random_permutation([["Unit circle", false],["Point", false],["Line", false], ["tangent", false], ["Parabola", true]]);
+ta_3b: random_permutation([["Unit circle", false],["Point", false],["Line", true], ["tangent", false], ["Parabola", false]]);
+ta_3: if bb=0 then ta_3b else ta_3a; /*Nature of (E)*/
+ta_4: cc(-ff,ff); /*Domain of definition*/
+
+/*jsxgraph*/
+/*Values of parameters by default*/
+a_init: -7/2; 
+b_init: 7/2;
+c_init: -1/2;
+
+/*Worked solution*/
+val_x: at(uu, [t=tt]); /*value of x at time tt*/
+val_y: at(bb*uu^2+ee*uu+dd, [t=tt]); /*value of y at time tt*/
+
+
+/*Correct values of a and b*/
+a_cor: bb; 
+b_cor: ee;
+c_cor: dd;
+
+/*Work solution*/
+sinsol: if uu=ff*sin(aa*t) then sin(aa*t) else cos(aa*t);]]></text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text></text>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text><![CDATA[ <p>1. \( (E):{@ta_1@}\)</p>
+<p> 2. a) For \(t={@tt@}\), Nature: {@mcq_correct(ta_2)[1]@}.</p>
+<p> b) For \(t \in \mathbb{R}\), Nature:{@mcq_correct(ta_3)[1]@}.</p>
+ <p>\(D= {@cc(-1,1)@}\)</p>
+<p>\({@a_cor@}, {@b_cor@}\) and \({@c_cor@}\)</p>]]></text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text><![CDATA[<p id="author">Emmaculate Odhiambo</p>
+<p id="concept"></p>
+<p id="reviewer"></p>
+<p id="reviewer"></p>
+<p id="description">Given a parametric equation and curve need to answer the questions that follows by performing some operations.</p>]]></text>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <variantsselectionseed></variantsselectionseed>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>ta_1</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>3</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>dropdown</type>
+      <tans>ta_2</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ans3</name>
+      <type>dropdown</type>
+      <tans>ta_3</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ans4</name>
+      <type>algebraic</type>
+      <tans>ta_4</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>3</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ansa</name>
+      <type>algebraic</type>
+      <tans>a_cor</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ansb</name>
+      <type>algebraic</type>
+      <tans>b_cor</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ansc</name>
+      <type>algebraic</type>
+      <tans>c_cor</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options></options>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description></description>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>ta_1</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p> To find the equation, you need to eliminate the parameter \(t\) between \(x\) and \(y\) and find their relation.</p>]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description></description>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>mcq_correct(ta_2)[1]</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p> Know that for each single value of \(t_{0}\), we will have at point having a coordinate \(  (x(t_{0}), y(t_{0})) \) </p>]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt3</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description></description>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans3</sans>
+        <tans>mcq_correct(ta_3)[1]</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt3-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt3-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text>The equation form of \((E)\) should give you the nature of \((E)\).</text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt4</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description></description>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans4</sans>
+        <tans>ta_4</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt4-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt4-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prtA</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description></description>
+        <answertest>NumAbsolute</answertest>
+        <sans>ansa</sans>
+        <tans>a_cor</tans>
+        <testoptions>0.1</testoptions>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prtA-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[The value of <b>a</b> you chose is <b>{@ansa@}</b>, which is correct.]]></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prtA-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[The value of <b>a</b> you chose is <b>{@ansa@}</b>, which is wrong. The correct is {@a_cor@}.]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description></description>
+        <answertest>NumAbsolute</answertest>
+        <sans>ansb</sans>
+        <tans>b_cor</tans>
+        <testoptions>0.1</testoptions>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>2</truenextnode>
+        <trueanswernote>prtA-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[The value of <b>b</b> you chose is <b>{@ansb@}</b>, which is correct.]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prtA-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[The value of <b>b</b> you chose is <b>{@ansb@}</b>, which is wrong. The correct is {@b_cor@}.]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description></description>
+        <answertest>NumAbsolute</answertest>
+        <sans>ansc</sans>
+        <tans>c_cor</tans>
+        <testoptions>0.1</testoptions>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prtA-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[The value of <b>c</b> you chose is <b>{@ansc@}</b>, which is correct.]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prtA-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[The value of <b>c</b> you chose is <b>{@ansc@}</b>, which is wrong. The correct is {@c_cor@}.]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <deployedseed>140702728</deployedseed>
+    <deployedseed>1225488973</deployedseed>
+    <deployedseed>2044942179</deployedseed>
+    <deployedseed>1619262668</deployedseed>
+    <deployedseed>1823624883</deployedseed>
+    <deployedseed>2077492734</deployedseed>
+    <deployedseed>1199580504</deployedseed>
+    <deployedseed>102301605</deployedseed>
+    <deployedseed>1291015759</deployedseed>
+    <deployedseed>57089177</deployedseed>
+    <deployedseed>540174318</deployedseed>
+    <deployedseed>906899908</deployedseed>
+    <deployedseed>888766779</deployedseed>
+    <deployedseed>487404650</deployedseed>
+    <deployedseed>1845479718</deployedseed>
+    <deployedseed>602656278</deployedseed>
+    <deployedseed>1266231946</deployedseed>
+    <deployedseed>1371953339</deployedseed>
+    <deployedseed>230034634</deployedseed>
+    <deployedseed>956305190</deployedseed>
+    <deployedseed>935599646</deployedseed>
+    <deployedseed>1075725835</deployedseed>
+    <deployedseed>958899895</deployedseed>
+    <deployedseed>1891403965</deployedseed>
+    <deployedseed>716278435</deployedseed>
+    <deployedseed>1945367045</deployedseed>
+    <deployedseed>1529387174</deployedseed>
+    <deployedseed>224864344</deployedseed>
+    <deployedseed>312123731</deployedseed>
+    <deployedseed>887023753</deployedseed>
+    <deployedseed>1552318035</deployedseed>
+    <deployedseed>112477811</deployedseed>
+    <deployedseed>1859629380</deployedseed>
+    <deployedseed>497646542</deployedseed>
+    <deployedseed>1253393261</deployedseed>
+    <deployedseed>1883824785</deployedseed>
+    <deployedseed>1241650029</deployedseed>
+    <deployedseed>363547190</deployedseed>
+    <deployedseed>719830961</deployedseed>
+    <deployedseed>1404122116</deployedseed>
+    <deployedseed>478043103</deployedseed>
+    <deployedseed>698387001</deployedseed>
+    <deployedseed>2030227108</deployedseed>
+    <deployedseed>455656837</deployedseed>
+    <deployedseed>631831329</deployedseed>
+    <deployedseed>1372351024</deployedseed>
+    <deployedseed>789266721</deployedseed>
+    <deployedseed>138100262</deployedseed>
+    <deployedseed>1760712562</deployedseed>
+    <deployedseed>678360119</deployedseed>
+    <deployedseed>821324769</deployedseed>
+    <deployedseed>24805124</deployedseed>
+    <deployedseed>1120899798</deployedseed>
+    <deployedseed>395286532</deployedseed>
+    <deployedseed>962952709</deployedseed>
+    <deployedseed>1207246767</deployedseed>
+    <deployedseed>1817214776</deployedseed>
+    <deployedseed>1648211958</deployedseed>
+    <deployedseed>55677548</deployedseed>
+    <deployedseed>2015376735</deployedseed>
+    <deployedseed>207910715</deployedseed>
+    <deployedseed>567978722</deployedseed>
+    <deployedseed>1979712715</deployedseed>
+    <deployedseed>1386282250</deployedseed>
+    <deployedseed>882332590</deployedseed>
+    <deployedseed>1380229278</deployedseed>
+    <deployedseed>726054923</deployedseed>
+    <deployedseed>635614780</deployedseed>
+    <deployedseed>157940484</deployedseed>
+    <deployedseed>1629264159</deployedseed>
+    <deployedseed>2103267161</deployedseed>
+    <deployedseed>439149363</deployedseed>
+    <deployedseed>1000998970</deployedseed>
+    <deployedseed>1186366915</deployedseed>
+    <deployedseed>1195374600</deployedseed>
+    <deployedseed>489285341</deployedseed>
+    <deployedseed>1658353729</deployedseed>
+    <deployedseed>71520644</deployedseed>
+    <deployedseed>786920432</deployedseed>
+    <deployedseed>1416604426</deployedseed>
+    <deployedseed>1600693702</deployedseed>
+    <deployedseed>2117864748</deployedseed>
+    <deployedseed>642519043</deployedseed>
+    <deployedseed>1406151433</deployedseed>
+    <deployedseed>267748602</deployedseed>
+    <deployedseed>141996950</deployedseed>
+    <deployedseed>2078365755</deployedseed>
+    <deployedseed>583602031</deployedseed>
+    <deployedseed>1956341388</deployedseed>
+    <deployedseed>617707661</deployedseed>
+    <deployedseed>1302294604</deployedseed>
+    <deployedseed>2135635237</deployedseed>
+    <deployedseed>451992478</deployedseed>
+    <deployedseed>1949662189</deployedseed>
+    <deployedseed>1404916598</deployedseed>
+    <deployedseed>1575556973</deployedseed>
+    <deployedseed>1194085170</deployedseed>
+    <deployedseed>1127645838</deployedseed>
+    <deployedseed>1001790612</deployedseed>
+    <deployedseed>1101101498</deployedseed>
+    <deployedseed>248614805</deployedseed>
+    <deployedseed>2013542681</deployedseed>
+    <deployedseed>803970823</deployedseed>
+    <deployedseed>1666145888</deployedseed>
+    <deployedseed>1223276529</deployedseed>
+    <deployedseed>58929185</deployedseed>
+  </question>
+
+</quiz>

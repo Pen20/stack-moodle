@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+<!-- question: 54126  -->
+  <question type="stack">
+    <name>
+      <text>Planes curves and Parametric Equations: Question 3</text>
+    </name>
+    <questiontext format="moodle_auto_format">
+      <text><![CDATA[<p>Parameterize the following curves</p>
+<br>(i): \({@yy@}\) 
+<br>\(x(t)=\) [[input:ans1]] [[validation:ans1]] [[feedback:prt1]]
+<br>\(y(t)=\)[[input:ans2]] [[validation:ans2]] [[feedback:prt2]]
+<br> (ii): \({@rr@}\) 
+<br> <b>Hint:</b> You can use the following relations: \({@x=r*cos(theta)@}\) and \({@y=r*sin(theta)@}\) 
+<br>\(x(\theta)=\)[[input:ans3]] [[validation:ans3]] [[feedback:prt3]]
+<br>\(y(\theta)=\)[[input:ans4]] [[validation:ans4]] [[feedback:prt4]]]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text><![CDATA[<p><b>Worked solution</b></p>
+<p>Parameterize the following curves</p>
+<br>(i): \({@yy@}\) 
+<br> We have: \({@yy@}={@dd@} \cdot ({@aa*x@})^2={@dd@} \cdot t^2\).
+<br> Thus  \(x(t)={@ta_1@}\) 
+<br>\(y(t)={@ta_2@}\)
+<br> (ii): \({@rr@} \)
+<br> <b>Hint:</b> You can use the following relations: \({@x=r*cos(theta)@}\) and \({@y=r*sin(theta)@}\) 
+<br> If the expression of \(r\) depend on \( {@cos(theta)@} \) then you use \({@x=r*cos(theta)@}\) by
+<br> replacing the expression corresponding to \(r\), otherwise you use \({@y=r*sin(theta)@}\).
+<br> Therefore, we get \(x(\theta)={@ta_3@}\) and \(y(\theta)={@ta_4@}\).]]></text>
+    </generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <stackversion>
+      <text>2022071300</text>
+    </stackversion>
+    <questionvariables>
+      <text>/*Define the coefficients and cosine and sine for parameterize curves*/
+aa: rand_with_prohib(-7,7,[0]); 
+cc: rand(5)+1;
+bb: rand_with_step(1,7,1);
+cs: cos(cc*theta);
+sn: sin(cc*theta);
+cs_sn: rand([cs, sn]);
+nn: rand(3)+1;
+dd: rand(5)+1;
+
+/*Define the parametric curves y and t*/
+yy: y=dd*(aa*x)^2; 
+rr: r=bb*cs_sn^nn;
+
+/*Model answers*/
+ta_1: t/aa; /*expression of x(t)*/
+ta_2: dd*t^2;  /*expression of y(t)*/
+ta_3: if cs_sn=cs then bb*cos(theta)^(nn+1) else 0;  /*expression of x(theta)*/
+ta_4: if cs_sn=sn then bb*sin(theta)^(nn+1) else 0;  /*expression of y(theta)*/</text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text></text>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text><![CDATA[<p>For (i): \({@yy@}\), \(x(t)={@ta_1@}\) and \(y(t)={@ta_2@}\)</p>
+<p> For (ii): \({@rr@} \), \(x(\theta)={@ta_3@}\) and \(y(\theta)={@ta_4@}\) </p>
+]]></text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text></text>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <variantsselectionseed></variantsselectionseed>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>ta_1</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>3</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>algebraic</type>
+      <tans>ta_2</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>3</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ans3</name>
+      <type>algebraic</type>
+      <tans>ta_3</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>3</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ans4</name>
+      <type>algebraic</type>
+      <tans>ta_4</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>3</showvalidation>
+      <options></options>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description></description>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>ta_1</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text>The correct parametric curve \(x(t)\) is \(x(t)={@ta_1@}\) . Check worked solution for details.</text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description></description>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>ta_2</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text>The correct parametric curve \(y(t)\) is \(y={@ta_2@}\). Check worked solution for details.</text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt3</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description></description>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans3</sans>
+        <tans>ta_3</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt3-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt3-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt4</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description></description>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans4</sans>
+        <tans>ta_4</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt4-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt4-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <deployedseed>1148967050</deployedseed>
+    <deployedseed>2041763816</deployedseed>
+    <deployedseed>1241826385</deployedseed>
+    <deployedseed>350980290</deployedseed>
+    <deployedseed>1176738036</deployedseed>
+    <deployedseed>885514740</deployedseed>
+    <deployedseed>1037910155</deployedseed>
+    <deployedseed>988617758</deployedseed>
+    <deployedseed>1454010743</deployedseed>
+    <deployedseed>1862973540</deployedseed>
+    <deployedseed>1120987313</deployedseed>
+    <deployedseed>1466978850</deployedseed>
+    <deployedseed>111232769</deployedseed>
+    <deployedseed>559641293</deployedseed>
+    <deployedseed>669878166</deployedseed>
+    <deployedseed>896417394</deployedseed>
+    <deployedseed>347001339</deployedseed>
+    <deployedseed>755250333</deployedseed>
+    <deployedseed>16272901</deployedseed>
+    <deployedseed>584241388</deployedseed>
+    <deployedseed>1550133700</deployedseed>
+    <deployedseed>595221535</deployedseed>
+    <deployedseed>1015047057</deployedseed>
+    <deployedseed>1212551540</deployedseed>
+    <deployedseed>1028921872</deployedseed>
+    <deployedseed>1338848787</deployedseed>
+    <deployedseed>1330198731</deployedseed>
+    <deployedseed>906319566</deployedseed>
+    <deployedseed>988022875</deployedseed>
+    <deployedseed>169505433</deployedseed>
+    <deployedseed>388823646</deployedseed>
+    <deployedseed>757727236</deployedseed>
+    <deployedseed>1457015380</deployedseed>
+    <deployedseed>1056464196</deployedseed>
+    <deployedseed>2457101</deployedseed>
+    <deployedseed>1094247988</deployedseed>
+    <deployedseed>1702511294</deployedseed>
+    <deployedseed>895360435</deployedseed>
+    <deployedseed>1833283696</deployedseed>
+    <deployedseed>240123712</deployedseed>
+    <deployedseed>1622148169</deployedseed>
+    <deployedseed>43358529</deployedseed>
+    <deployedseed>497070419</deployedseed>
+    <deployedseed>1135355133</deployedseed>
+    <deployedseed>996894582</deployedseed>
+    <deployedseed>1715188144</deployedseed>
+    <deployedseed>701460195</deployedseed>
+    <deployedseed>1033302273</deployedseed>
+    <deployedseed>1152945358</deployedseed>
+    <deployedseed>1381683769</deployedseed>
+    <deployedseed>1437602989</deployedseed>
+    <deployedseed>161481747</deployedseed>
+    <deployedseed>1274394802</deployedseed>
+    <deployedseed>1981772330</deployedseed>
+    <deployedseed>1420350640</deployedseed>
+    <deployedseed>1491770793</deployedseed>
+    <deployedseed>472923774</deployedseed>
+    <deployedseed>1096939187</deployedseed>
+    <deployedseed>1692064514</deployedseed>
+    <deployedseed>741459673</deployedseed>
+    <deployedseed>1253292095</deployedseed>
+    <deployedseed>2109842812</deployedseed>
+    <deployedseed>1924703512</deployedseed>
+    <deployedseed>321387998</deployedseed>
+    <deployedseed>1768351950</deployedseed>
+    <deployedseed>508957454</deployedseed>
+    <deployedseed>186415681</deployedseed>
+    <deployedseed>1609629</deployedseed>
+    <deployedseed>2043605886</deployedseed>
+    <deployedseed>748975110</deployedseed>
+    <deployedseed>1622369976</deployedseed>
+    <deployedseed>376268873</deployedseed>
+    <deployedseed>742087657</deployedseed>
+    <deployedseed>2018584510</deployedseed>
+    <deployedseed>1938292742</deployedseed>
+    <deployedseed>1048191628</deployedseed>
+    <deployedseed>1086258088</deployedseed>
+    <deployedseed>1936552186</deployedseed>
+    <deployedseed>132175049</deployedseed>
+    <deployedseed>919566589</deployedseed>
+    <deployedseed>1999253570</deployedseed>
+    <deployedseed>426795230</deployedseed>
+    <deployedseed>996451543</deployedseed>
+    <deployedseed>1568335254</deployedseed>
+    <deployedseed>49888656</deployedseed>
+    <deployedseed>1385552984</deployedseed>
+    <deployedseed>1778179045</deployedseed>
+    <deployedseed>410482859</deployedseed>
+    <deployedseed>1624605433</deployedseed>
+    <deployedseed>1799069727</deployedseed>
+    <deployedseed>552334567</deployedseed>
+    <deployedseed>1509813580</deployedseed>
+    <deployedseed>209856446</deployedseed>
+    <deployedseed>395082493</deployedseed>
+    <deployedseed>1494905381</deployedseed>
+    <deployedseed>2077962055</deployedseed>
+    <deployedseed>1831763576</deployedseed>
+    <deployedseed>328624573</deployedseed>
+    <deployedseed>727452264</deployedseed>
+    <deployedseed>1477329485</deployedseed>
+    <deployedseed>528592889</deployedseed>
+    <deployedseed>918737183</deployedseed>
+  </question>
+
+</quiz>
